@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html ng-app="listaTelefonica">
+  <head>
+    <meta charset='UTF-8'>
+    <title></title>
+    <!--  CSS próprio::
+    ======================================================== -->
+    <link rel='stylesheet' href='css/footer.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='css/header.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='css/main.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='css/nav.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='css/novo.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='css/style.css' text='text/css' media='all'>
+
+    <!-- Fonts Google 
+    ======================================================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <!-- JavaScript próprio:: 
+    ======================================================== -->
+    <script type='text/javascript' src='javascript/javaScript.js'></script>
+
+    <!-- Pasta Style - bibliotecas de CSS 
+    ======================================================== -->
+    <link rel='stylesheet' href='style/BootStrap/css/bootstrap.css' text='text/css' media='all'>    
+    <link rel='stylesheet' href='style/circle.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='style/font-awesome/css/font-awesome.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='style/material-design-iconic-font.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='style/material-design-iconic-font.min.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='style/W3C-css3.css' text='text/css' media='all'>
+    <link rel='stylesheet' href='style/W3C-css4.css' text='text/css' media='all'>
+
+    <!-- Pasta Lib - bibliotecas de JavaScript 
+    incluir demais arquivos disponíveis conforme necessário
+    ======================================================== -->
+    <script type='text/javascript' src='lib/angular.js'></script>
+    <script type='text/javascript' src='lib/jquery.js'></script>
+
+    <!-- Infra 
+    ======================================================== -->
+
+    <!-- Modules 
+    ======================================================== -->
+    <script type='text/javascript' src='app/modules/listaTelefonica.js'></script>
+
+    <!-- Controllers 
+    ======================================================== -->
+    <script type='text/javascript' src='app/controllers/listaTelefonicaController.js'></script>
+
+    <!-- Routes 
+    ======================================================== -->
+
+    <!-- Services 
+    ======================================================== -->
+    <script type='text/javascript' src='app/services/meuService.js'></script>
+    <!-- <script type='text/javascript' src='app/services/teste.js'></script> -->
+
+    <!-- Views 
+    ======================================================== -->
+
+    <!-- Config 
+    ======================================================== -->
+
+    
+  </head>
+  <body ng-controller="listaTelefonicaController">
+
+    <!-- Seção: Cabeçalho -->
+    <header></header>
+    <!-- Seção: Cabeçalho -->
+
+    <!-- Seção: Barra de Navegação -->
+    <nav></nav>
+    <!-- Seção: Barra de Navegação -->
+
+    <!-- Seção: Principal -->
+    <main>
+
+      <!-- Seção: Nome -->
+      <section class="container w3-center">
+
+        <div class="jumbotron">
+          <h2 class="text-dark">{{ app }}</h2>
+          <table  class="table table-hover"
+                  ng-show="contatos.length > 0">
+            <tr>
+              <th></th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>Operadora</th>
+            </tr>
+            <tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+              <td><input type="checkbox" ng-model="contato.selecionado"></td>
+              <td>{{ contato.nome }}</td>
+              <td>{{ contato.telefone }}</td>
+              <td>{{ contato.operadora.nome }}</td> 
+            </tr>
+          </table>
+        </div>
+
+      </section>
+      <!-- Seção: Nome -->
+
+
+      <!-- Seção: Nome -->
+      <section class="container">
+
+        <form name="contatoForm">
+          <div class="jumbotron">
+            <p>Insersão de dados</p>
+            <div class="form-group">
+              <input  type="text" 
+                      class="form-control" 
+                      id=""
+                      name="nome"
+                      placeholder="Nome"
+                      ng-model="contato.nome"
+                      ng-required="true">
+            </div>
+            <div class="form-group">
+              <input  type="text" 
+                      class="form-control" 
+                      id=""
+                      name="telefone"
+                      placeholder="Telefone"
+                      ng-model="contato.telefone"
+                      ng-required="true">
+            </div>
+            <div class="form-group">
+              <select   name="" 
+                        class="form-control"
+                        id=""
+                        ng-model="contato.operadora"
+                        ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+                <option value="">Selecione uma operadora</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button   type="button" 
+                        class="btn btn-primary btn-block"
+                        ng-click="adicionarContato(contato)"
+                        ng-disabled="contatoForm.$invalid">
+              Adicionar
+              </button>
+            </div>
+            <div class="form-group">
+              <button   type="button" 
+                        class="btn btn-danger btn-block"
+                        ng-click="apagarContato(contatos)"
+                        ng-disabled="!isContatoSelecionado(contatos)">
+              Apagar
+              </button>
+            </div>
+          </div>
+      </form>
+
+      <div  class="alert alert-danger"
+            ng-show="contatoForm.$invalid">
+        <p>
+          Campos de preenchimento obrigatório: 
+          <strong ng-show="contatoForm.nome.$invalid">nome </strong>
+          <strong ng-show="contatoForm.nome.$invalid && contatoForm.telefone.$invalid">,</strong>
+          <strong ng-show="contatoForm.telefone.$invalid"> telefone</strong>
+        </p>
+      </div>
+
+      </section>
+
+      <!-- Seção: Nome -->
+
+    </main>
+    <!-- Seção: Principal -->
+
+    <!-- Seção: Rodapé -->
+    <footer class="container"></footer>
+    <!-- Seção: Rodapé -->
+
+
+  </body>
+</html>
